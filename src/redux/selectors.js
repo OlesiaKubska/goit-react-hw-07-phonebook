@@ -1,14 +1,16 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-// Селектор для отримання всіх контактів
 export const selectAllContacts = (state) => state.contacts.contacts;
-
-// Селектор для отримання поточного фільтра
 export const selectFilter = (state) => state.filter;
+export const selectLoading = (state) => state.contacts.loading;
+export const selectError = (state) => state.contacts.error;
 
 export const selectFilteredContacts = createSelector(
     [selectAllContacts, selectFilter],
-    (contacts, filter) => contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-    )
+    (contacts, filter) => {
+        if (!Array.isArray(contacts) || !filter) return [];
+        return contacts.filter((contact) =>
+            contact.name.toLowerCase().includes(filter.toLowerCase())
+        );
+    }
 );
