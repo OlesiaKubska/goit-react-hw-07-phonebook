@@ -7,13 +7,11 @@ import { Filter } from "./Filter/Filter";
 import { Section } from "./Section/Section";
 import { Header } from "./Header/Header";
 import { AppContainer } from "./AppContainer/AppContainer";
-import { setFilter } from "redux/filterSlice";
 import { fetchContacts } from "redux/operations";
-import { selectError, selectFilter, selectIsLoading, selectAllContacts } from "redux/selectors";
+import { selectError, selectIsLoading, selectAllContacts } from "redux/selectors";
 
 export const App = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(selectFilter);
   const contacts = useSelector(selectAllContacts);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -31,10 +29,7 @@ export const App = () => {
         {contacts && contacts.length === 0 && !isLoading &&
           <p>There are no any contacts ...</p>}
         <Header title="Contacts" />
-        <Filter
-            value={filter}
-            onChange={(e) => dispatch(setFilter(e.target.value))}
-          />
+        <Filter />
         <ContactList />
       </Section>
     </AppContainer>
